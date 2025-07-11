@@ -1,0 +1,1 @@
+SELECT * FROM process_uptime ORDER BY time;
