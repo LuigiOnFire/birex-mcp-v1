@@ -1,1 +1,1 @@
-SELECT * FROM process_uptime ORDER BY time;
+SELECT * FROM anomaly_data ORDER BY time;
