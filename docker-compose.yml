@@ -1,0 +1,34 @@
+  version: '3.9'
+
+  services:
+    db:
+      image: timescale/timescaledb-ha:pg17
+      container_name: anomaly_db
+      environment:
+        POSTGRES_DB: anomaly_data
+        POSTGRES_USER: postgres
+        POSTGRES_HOST_AUTH_METHOD: trust
+        # No password set — peer authentication assumed
+      ports:
+        - "5432:5432"
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+        - ./data_gen:/docker-entrypoint-initdb.d
+      restart: always
+
+    app:
+      build: .
+      env_file:
+        - .env
+      depends_on:
+        - db
+      environment:
+        - PGHOST=db
+      command: python mcp_client/client.py mcp_server/server.py
+      volumes:
+      - ./mcp_client:/mcp_client
+      - ./mcp_server:/mcp_server
+      restart: always
+
+  volumes:
+    pgdata:

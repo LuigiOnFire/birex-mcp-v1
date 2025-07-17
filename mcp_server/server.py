@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 # Initialize FastMCP server
 @asynccontextmanager
 async def lifespan(server):
-    conn = await asyncpg.connect("postgresql:///anomaly_data?user=postgres")
+    conn = await asyncpg.connect("postgresql://postgres@db:5432/anomaly_data")
     try:
         yield type("C", (), {"db": conn})
     finally:
@@ -45,16 +45,13 @@ async def run_sql_query(ctx: Context, query: str) -> str:
         rows = await db.fetch(query)
     except Exception as e:
         return f"SQL Error: {str(e)}"
-    
 
     if not rows:
         return "Query executed successfully, but returned no results."
 
-
     # Format the results as a simple table
     headers = list(rows[0].keys())
     lines = [", ".join(headers)]
-
 
     out_values = []
     for row in rows:
