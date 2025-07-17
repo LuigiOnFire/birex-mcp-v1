@@ -25,9 +25,6 @@
       environment:
         - PGHOST=db
       command: python mcp_client/client.py mcp_server/server.py
-      volumes:
-      - ./mcp_client:/mcp_client
-      - ./mcp_server:/mcp_server
       restart: always
 
   volumes:
