@@ -1,8 +1,8 @@
+  version: '3.9'
+
   services:
     db:
-      build:
-        context: ./db
-        dockerfile: Dockerfile
+      image: birex-mcp-v1-db
       container_name: anomaly_db
       environment:
         POSTGRES_DB: anomaly_data
@@ -16,9 +16,7 @@
       restart: always
 
     app:
-      build: 
-        context: ./mcp_client_server
-        dockerfile: Dockerfile
+      image: birex-mcp-v1-app
       env_file:
         - .env
       depends_on:
