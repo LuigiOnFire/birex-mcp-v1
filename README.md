@@ -10,11 +10,10 @@ The agent is capable of responding to natural language queries about the databas
 
 ## Usage Instructions
 
-1. Clone the repo
+1. Place an `.env` file in the root directory of the project container a valid GOOGLE_AI API key, it should look like
 
-2. Install uv (if not already installed)
 ```
-curl -LsSf https://astral.sh/uv/install.sh | sh
+GOOGLE_API_KEY=<your API -key>
 ```
 
-3. Sync the dependencies of the 
+2. Run ./reset_container.sh to run the agent.
