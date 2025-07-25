@@ -1,5 +1,5 @@
 # Run the following command to execute a SQL script as the 'postgres' user:
-psql -U postgres -d anomaly_data -f gen_fake_data.sql
+psql -U postgres -d anomaly_data -f 02_gen_fake_data_anomaly.sql
 
 # NOTE: This must be run outside of any Python virtual environment (venv),
 # as some environments may interfere with PATH or Postgres authentication.

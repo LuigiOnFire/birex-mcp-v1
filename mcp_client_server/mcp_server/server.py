@@ -90,4 +90,4 @@ async def describe_tables(ctx: Context) -> str:
 
 if __name__ == "__main__":
     # Initialize and run the server
-    mcp.run(transport='stdio')
+    mcp.run(transport="http", host="0.0.0.0", port=3300)

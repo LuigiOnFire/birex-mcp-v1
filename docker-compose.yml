@@ -14,6 +14,18 @@
       volumes:
         - pgdata:/var/lib/postgresql/data
       restart: always
+    
+    data_gen_service:
+      build:
+        context: ./data_gen_service
+        dockerfile: Dockerfile
+      depends_on:
+        - db
+      environment:
+        - PGHOST=db
+      command: python data_feed.py
+      restart: always
+
 
     app:
       build: 
