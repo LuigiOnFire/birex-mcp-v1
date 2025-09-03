@@ -13,14 +13,15 @@ logger = logging.getLogger(__name__)
 # Initialize FastMCP server
 @asynccontextmanager
 async def lifespan(server):
-    conn = await asyncpg.connect("postgresql://postgres@db:5432/anomaly_data")
+    conn = await asyncpg.connect("postgresql:///anomaly_data?user=postgres")
+    # conn = await asyncpg.connect("postgresql://postgres@db:5432/anomaly_data")
     try:
         yield type("C", (), {"db": conn})
     finally:
         await conn.close()
 
 # mcp.lifespan = lifespan
-mcp = FastMCP("SQL Query Agent", lifespan=lifespan)
+mcp = FastMCP("SQL Query Agent", lifespan=lifespan, stateless_http=True, host="localhost", port=3300)
 
 
 @mcp.tool()
@@ -90,4 +91,4 @@ async def describe_tables(ctx: Context) -> str:
 
 if __name__ == "__main__":
     # Initialize and run the server
-    mcp.run(transport="http", host="0.0.0.0", port=3300)
+    mcp.run(transport="streamable-http")
